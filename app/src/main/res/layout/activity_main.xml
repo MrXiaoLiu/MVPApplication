@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,13 +7,44 @@
     android:layout_height="match_parent"
     tools:context="text.tao.com.myapplication.MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-</android.support.constraint.ConstraintLayout>
+
+        <Button
+            android:id="@+id/bt_simple"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="简单MVP"
+            />
+
+        <Button
+            android:id="@+id/bt_project"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="实战MVP项目"
+            />
+
+        <Button
+            android:id="@+id/bt_skip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="自定义跳过"
+            />
+
+        <Button
+            android:id="@+id/bt_darg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="拖拽"
+            />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="简单MVP"
+            />
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
