@@ -7,6 +7,6 @@ package text.tao.com.myapplication.utils;
  */
 
 public class BaseApi {
-   public static String base ="http://180.169.39.54:10001/api43/";
-   public static String  login = "http://180.169.39.54:10001/api43/index/passwdLogin";
+   public static String base ="公共头部";
+   public static String  login = "登录接口";
 }
