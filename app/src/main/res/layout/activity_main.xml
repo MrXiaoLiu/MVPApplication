@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v4.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="text.tao.com.myapplication.MainActivity">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-
 
         <Button
             android:id="@+id/bt_simple"
@@ -42,9 +39,27 @@
             />
 
         <Button
+            android:id="@+id/mvideo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="简单MVP"
+            android:text="视频"
             />
+
+
+        <Button
+            android:id="@+id/calendar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="日历"/>
+        <Button
+            android:id="@+id/animation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="动画"/>
+        <Button
+            android:id="@+id/push"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="推送"/>
     </LinearLayout>
 </android.support.v4.widget.NestedScrollView>

@@ -13,7 +13,7 @@ public class HttpTask extends AsyncTask<String, Void, String> {
 	@Override
 	protected String doInBackground(String... params) {
 		try {
-			return HttpUtils.post(params[0],params[1], params[2], params[3]);
+			return HttpUtils.get(params[0]);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

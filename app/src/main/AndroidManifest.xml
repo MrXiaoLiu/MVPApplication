@@ -1,25 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="text.tao.com.myapplication">
+          package="text.tao.com.myapplication"
+    >
+    <!--xmlns:tools="http://schemas.android.com/tools"-->
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_LOGS"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE"/>-->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
+        android:name=".AppApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:name=".AppApplication"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        >
+        <!--tools:replace="icon, label, theme"-->
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -33,6 +39,35 @@
         <activity android:name=".SimpleActivity"/>
         <activity android:name=".SkipActivity"/>
         <activity android:name=".MVPDemo.ui.MainDemoActivity"/>
+        <activity android:name=".MVideoActivity"/>
+        <activity android:name=".CalendarActivity"/>
+
+
+        <activity
+            android:name=".x5.FullScreenActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name=".x5.FilechooserActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name=".x5.BrowserActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/app_name">
+        </activity>
+
+        <activity
+            android:name=".push.ui.PushActivity"
+            android:label="@string/app_name"
+            />
+        <activity android:name=".push.PushActivity2"/>
+        <service android:name=".push.ui.BackService2"/>
+        <service android:name=".push.ui.BackService"/>
+        <service android:name=".push.BaseService"/>
     </application>
 
 </manifest>

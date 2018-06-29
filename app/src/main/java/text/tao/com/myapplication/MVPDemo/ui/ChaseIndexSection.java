@@ -23,7 +23,6 @@ public class ChaseIndexSection extends StatelessSection {
   public void onBindFooterViewHolder(ViewHolder paramViewHolder)
   {
     RecyclerView localRecyclerView = (RecyclerView)paramViewHolder.getView(R.id.recycle_view);
-    Log.i("aaa", "onBindItemViewHolder=" + localRecyclerView);
     localRecyclerView.setHasFixedSize(true);
     localRecyclerView.setNestedScrollingEnabled(false);
     localRecyclerView.setLayoutManager(new LinearLayoutManager(this.mContext, 1, false));
@@ -35,16 +34,15 @@ public class ChaseIndexSection extends StatelessSection {
   public void onBindHeaderViewHolder(ViewHolder paramViewHolder)
   {
     RecyclerView localRecyclerView = (RecyclerView)paramViewHolder.getView(R.id.recycle_view);
-    Log.i("aaa", "onBindHeaderViewHolder=" + localRecyclerView);
   }
   
   public void onBindItemViewHolder(ViewHolder paramViewHolder, int paramInt)
   {
     RecyclerView localRecyclerView = (RecyclerView)paramViewHolder.getView(R.id.recycle_view);
-    Log.i("aaa", "onBindItemViewHolder=" + localRecyclerView);
     localRecyclerView.setHasFixedSize(true);
     localRecyclerView.setNestedScrollingEnabled(false);
     localRecyclerView.setLayoutManager(new LinearLayoutManager(this.mContext, 0, false));
-    localRecyclerView.setAdapter(new ChaseRecommendJPAdapter(this.push_steward));
+    ChaseRecommendJPAdapter chaseRecommendJPAdapter =new ChaseRecommendJPAdapter(this.push_steward);
+    localRecyclerView.setAdapter(chaseRecommendJPAdapter);
   }
 }

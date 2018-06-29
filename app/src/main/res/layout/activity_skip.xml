@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+
+    <android.support.v4.widget.NestedScrollView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <text.tao.com.myapplication.view.ClearEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <text.tao.com.myapplication.view.AddSubUtils
+                android:id="@+id/addsubutils"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                app:ImageWidth="40dp"
+                app:all_background="@android:color/white"
+                app:contentBackground="@null"
+                app:contentTextColor="@color/colorAccent"
+                app:contentTextSize="15sp"
+                app:contentWidth="100dp"
+                app:editable="true"
+                />
+
+            <TextView
+                android:id="@+id/mtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="倒计时"/>
+
+
+            <text.tao.com.myapplication.view.MovingImageView
+                android:id="@+id/moving_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/time2"
+
+                app:miv_load_on_create="false"
+                app:miv_max_relative_size="3.0"
+                app:miv_min_relative_offset="0.2"
+                app:miv_repetitions="-1"
+                app:miv_speed="100"
+                app:miv_start_delay="100"
+                />
+
+            <text.tao.com.myapplication.view.SimpleButton
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                app:sb_checked="true"
+
+                app:sb_text="跳过"
+                app:sb_text_color_check="@color/colorAccent"/>
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</layout>

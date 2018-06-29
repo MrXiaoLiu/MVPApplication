@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+
+    >
+
+
+    <data>
+
+        <variable
+            name="prbaen"
+            type="text.tao.com.myapplication.adapter.PrBean.ServiceListBean"/>
+    </data>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:prImage="@{prbaen.ser_img}"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@{prbaen.ser_title}"
+            android:textColor="@color/colorAccent"
+            android:textSize="13sp"
+            />
+
+        <TextView
+            android:id="@+id/pr_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:text="@{prbaen.city_name}"
+            android:textColor="@color/selected_day_background"
+            android:textSize="15sp"/>
+
+    </LinearLayout>
+</layout>

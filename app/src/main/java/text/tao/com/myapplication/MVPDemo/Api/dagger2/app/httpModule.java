@@ -25,7 +25,12 @@ public class httpModule
 {
   public Retrofit createRetrofit(Retrofit.Builder paramBuilder, OkHttpClient paramOkHttpClient, String paramString)
   {
-    return paramBuilder.baseUrl(paramString).client(paramOkHttpClient).addCallAdapterFactory(RxJava2CallAdapterFactory.create()).addConverterFactory(GsonConverterFactory.create()).build();
+    return paramBuilder
+            .baseUrl(paramString)
+            .client(paramOkHttpClient)
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
   }
   
   @Provides

@@ -29,7 +29,6 @@ public enum RxBus {
   public <T> Flowable<T> toFlowable(Class<T> eventType) {
     return bus.ofType(eventType);
 
-
   }
 
   //封装默认订阅

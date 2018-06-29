@@ -9,7 +9,6 @@ import java.net.URL;
 
 public class HttpUtils {
 
-	public static final String URL_STR = "http://192.168.57.1:8080/Dream_4_23_PhoneGapServer/PhoneGapServlet";
 
 	public static String get(String urlStr) {
 		String result = null;

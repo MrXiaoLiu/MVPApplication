@@ -1,6 +1,8 @@
 package text.tao.com.myapplication.MVPDemo.login;
 
 
+import android.util.Log;
+
 import javax.inject.Inject;
 
 import text.tao.com.myapplication.MVPDemo.Api.bean.IndexBean;
@@ -8,6 +10,7 @@ import text.tao.com.myapplication.MVPDemo.retrofit2.RetrofitHelper;
 import text.tao.com.myapplication.MVPDemo.rx.BaseSubscriber;
 import text.tao.com.myapplication.MVPDemo.rx.RxPresenter;
 import text.tao.com.myapplication.MVPDemo.rx.RxUtils;
+import text.tao.com.myapplication.adapter.PrBean;
 
 //P层
 //两个特点
@@ -32,4 +35,7 @@ public class LoginPresenter extends RxPresenter<LoginView> {
                     }
                 }));
     }
+
+
+
 }

@@ -1,6 +1,7 @@
 package text.tao.com.myapplication.MVPDemo.rx;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.orhanobut.logger.Logger;
 
@@ -27,6 +28,7 @@ public abstract class BaseSubscriber<T> extends ResourceSubscriber<T> {
     }
 
     public void onFailure(int paramInt, String paramString) {
+
     }
 
     public void onNext(T paramT) {
@@ -42,17 +44,13 @@ public abstract class BaseSubscriber<T> extends ResourceSubscriber<T> {
         if ((this.mMsg != null) && (!TextUtils.isEmpty(this.mMsg))) {
             this.mView.showError(this.mMsg);
         }else if ((paramThrowable instanceof ApiException)) {
-            Logger.i("aaa", "11111111错误");
             this.mView.showError(paramThrowable.toString());
         }else if ((paramThrowable instanceof SocketTimeoutException)) {
             this.mView.showError("服务器响应超时ヽ(≧Д≦)ノ");
-            Logger.i("aaa", "服务器响应超时ヽ");
         }else if ((paramThrowable instanceof HttpException)) {
             this.mView.showError("数据加载失败ヽ(≧Д≦)ノ");
-            Logger.i("aaa", "数据加载失败ヽ");
         }else {
             this.mView.showError("未知错误ヽ(≧Д≦)ノ");
-            Logger.i("aaa", "未知错误ヽ" + paramThrowable.toString());
         }
 
     }
@@ -65,7 +63,7 @@ public abstract class BaseSubscriber<T> extends ResourceSubscriber<T> {
     protected void onStart() {
         super.onStart();
         if (!NetworkUtils.isConnected(AppUtils.getAppContext())) {
-            Logger.i("aaa", "没有网络");
+            Log.i("aaa", "没有网络");
         }
     }
 }

@@ -5,9 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
+import com.alibaba.android.arouter.facade.annotation.Route;
+
 import text.tao.com.myapplication.demo.demo4.MvpActivity;
 import text.tao.com.myapplication.demo.demo4.login.LoginPresenter;
 import text.tao.com.myapplication.demo.demo4.login.LoginView;
+import text.tao.com.myapplication.utils.BaseApi;
 
 /**
  * MrLiu253@163.com
@@ -15,6 +18,7 @@ import text.tao.com.myapplication.demo.demo4.login.LoginView;
  * @time 2018/4/13
  */
 
+@Route(path = BaseApi.simple)
 public class SimpleActivity
         extends MvpActivity<LoginView, LoginPresenter> implements LoginView {
 

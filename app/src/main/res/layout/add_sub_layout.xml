@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <!--android:divider="@drawable/divider_horizontal"-->
+    <!--android:background="@drawable/addsubutils_add_sub_bg"-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="48dp"
+
+              android:orientation="horizontal">
+
+    <!--android:background="@drawable/addsubutils_left_selector"-->
+    <!--@dimen/addsubutils_btn_width"-->
+    <ImageView
+        android:id="@+id/ic_minus"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="@dimen/dp_10"
+        android:clickable="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/addsubutils_ic_minus" />
+
+    <EditText
+        android:id="@+id/et_input"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@null"
+        android:cursorVisible="true"
+        android:digits="0123456789"
+        android:gravity="center"
+        android:singleLine="true"
+        android:inputType="number"
+        android:minWidth="@dimen/addsubutils_et_minwidth"
+        android:text="1"
+        android:textColor="@color/addsubutils_text"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/addsubutils_textsize"/>
+
+
+    <!--android:background="@drawable/addsubutils_right_selector"-->
+    <ImageView
+        android:id="@+id/ic_plus"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="@dimen/dp_10"
+        android:clickable="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/addsubutils_ic_plus" />
+</LinearLayout>

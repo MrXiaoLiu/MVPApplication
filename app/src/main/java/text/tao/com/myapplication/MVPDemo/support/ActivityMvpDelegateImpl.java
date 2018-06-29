@@ -31,7 +31,6 @@ public class ActivityMvpDelegateImpl<V extends BaseView, P extends RxPresenter<V
 
 
 
-    Log.i("aaa","执行这里ActivityMvpDelegateImpl");
   }
 
   @Override

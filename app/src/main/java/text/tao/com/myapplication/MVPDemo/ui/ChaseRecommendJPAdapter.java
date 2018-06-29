@@ -11,8 +11,7 @@ import java.util.List;
 import text.tao.com.myapplication.MVPDemo.Api.bean.IndexBean;
 import text.tao.com.myapplication.R;
 
-public class ChaseRecommendJPAdapter
-  extends BaseQuickAdapter<IndexBean.PushStewardBean, BaseViewHolder>
+public class ChaseRecommendJPAdapter extends BaseQuickAdapter<IndexBean.PushStewardBean, BaseViewHolder>
 {
   public ChaseRecommendJPAdapter(@Nullable List<IndexBean.PushStewardBean> paramList)
   {
@@ -21,7 +20,12 @@ public class ChaseRecommendJPAdapter
   
   protected void convert(BaseViewHolder paramBaseViewHolder, IndexBean.PushStewardBean paramPushStewardBean)
   {
-    Glide.with(this.mContext).load(paramPushStewardBean.getImg()).centerCrop().placeholder(R.drawable.time2).dontAnimate().into((ImageView)paramBaseViewHolder.getView(R.id.image));
+//    Glide.with(this.mContext).load(paramPushStewardBean.getImg()).centerCrop().placeholder(R.drawable.time2).dontAnimate().into((ImageView)paramBaseViewHolder.getView(R.id.image));
+
+
+//    CommonImageLoader.getInstance().displayImage(paramPushStewardBean.getImg(),paramBaseViewHolder.getView(R.id.image));
+
+
     paramBaseViewHolder.setText(R.id.text, paramPushStewardBean.getBrief_sml());
   }
 }

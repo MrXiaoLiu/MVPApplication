@@ -6,6 +6,8 @@ import java.util.List;
 
 import io.reactivex.BackpressureStrategy;
 import io.reactivex.Flowable;
+import io.reactivex.FlowableEmitter;
+import io.reactivex.FlowableOnSubscribe;
 import io.reactivex.FlowableTransformer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
@@ -44,12 +46,15 @@ public class RxUtils {
    * @return
    */
   public static <T> Flowable<T> createData(final T t) {
-    return Flowable.create(emitter -> {
-      try {
-        emitter.onNext(t);
-        emitter.onComplete();
-      } catch (Exception e) {
-        emitter.onError(e);
+    return Flowable.create(new FlowableOnSubscribe<T>() {
+      @Override
+      public void subscribe(FlowableEmitter<T> emitter) throws Exception {
+        try {
+          emitter.onNext(t);
+          emitter.onComplete();
+        } catch (Exception e) {
+          emitter.onError(e);
+        }
       }
     }, BackpressureStrategy.BUFFER);
   }
@@ -62,12 +67,15 @@ public class RxUtils {
    * @return
    */
   public static <T> Flowable<List<T>> createData(final List<T> t) {
-    return Flowable.create(emitter -> {
-      try {
-        emitter.onNext(t);
-        emitter.onComplete();
-      } catch (Exception e) {
-        emitter.onError(e);
+    return Flowable.create(new FlowableOnSubscribe<List<T>>() {
+      @Override
+      public void subscribe(FlowableEmitter<List<T>> emitter) throws Exception {
+        try {
+          emitter.onNext(t);
+          emitter.onComplete();
+        } catch (Exception e) {
+          emitter.onError(e);
+        }
       }
     }, BackpressureStrategy.BUFFER);
   }
@@ -81,13 +89,16 @@ public class RxUtils {
     return new FlowableTransformer<Bean2<T>, T>() {
       @Override
       public Publisher<T> apply(Flowable<Bean2<T>> httpResponseFlowable) {
-        return httpResponseFlowable.flatMap((Function<Bean2<T>, Flowable<T>>) httpResponse -> {
-          if (httpResponse.getStatus() == 1) {
-            if (httpResponse.getData() != null)
-              return createData(httpResponse.getData());
-            return Flowable.error(new ApiException("服务器返回error"));
-          } else {
-            return Flowable.error(new ApiException("服务器返回error"));
+        return httpResponseFlowable.flatMap(new Function<Bean2<T>, Flowable<T>>() {
+          @Override
+          public Flowable<T> apply(Bean2<T> httpResponse) throws Exception {
+            if (httpResponse.getStatus() == 1) {
+              if (httpResponse.getData() != null)
+                return createData(httpResponse.getData());
+              return Flowable.error(new ApiException("服务器返回error"));
+            } else {
+              return Flowable.error(new ApiException("服务器返回error"));
+            }
           }
         });
       }
@@ -104,13 +115,16 @@ public class RxUtils {
     return new FlowableTransformer<Bean2<List<T>>, List<T>>() {
       @Override
       public Publisher<List<T>> apply(Flowable<Bean2<List<T>>> httpResponseFlowable) {
-        return httpResponseFlowable.flatMap((Function<Bean2<List<T>>, Flowable<List<T>>>) httpResponse -> {
-          if (httpResponse.getStatus() == 1) {
-            if (httpResponse.getData() != null)
-              return createData(httpResponse.getData());
-            return Flowable.error(new ApiException("服务器返回error"));
-          } else {
-            return Flowable.error(new ApiException("服务器返回error"));
+        return httpResponseFlowable.flatMap(new Function<Bean2<List<T>>, Flowable<List<T>>>() {
+          @Override
+          public Flowable<List<T>> apply(Bean2<List<T>> httpResponse) throws Exception {
+            if (httpResponse.getStatus() == 1) {
+              if (httpResponse.getData() != null)
+                return createData(httpResponse.getData());
+              return Flowable.error(new ApiException("服务器返回error"));
+            } else {
+              return Flowable.error(new ApiException("服务器返回error"));
+            }
           }
         });
       }

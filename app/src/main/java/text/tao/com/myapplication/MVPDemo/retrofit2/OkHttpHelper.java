@@ -13,16 +13,19 @@ import com.facebook.stetho.okhttp3.StethoInterceptor;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
 import okhttp3.CacheControl;
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import text.tao.com.myapplication.utils.AppUtils;
+import text.tao.com.myapplication.utils.BaseApi;
 import text.tao.com.myapplication.utils.FileUtils;
 import text.tao.com.myapplication.utils.NetworkUtils;
 
@@ -52,6 +55,8 @@ public class OkHttpHelper {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
         mOkHttpClient = new OkHttpClient.Builder()
+                //处理多BaseUrl,添加应用拦截器
+                .addInterceptor(new MoreBaseUrlInterceptor())
                 .readTimeout(DEFAULT_READ_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
                 .writeTimeout(DEFAULT_WRITE_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
                 .connectTimeout(DEFAULT_CONNECT_TIMEOUT_MILLIS, TimeUnit.MILLISECONDS)
@@ -60,6 +65,7 @@ public class OkHttpHelper {
                 .retryOnConnectionFailure(true)
                 //设置缓存
                 .addNetworkInterceptor(mRewriteCacheControlInterceptor)
+
                 .addInterceptor(mRewriteCacheControlInterceptor)
                 //FaceBook 网络调试器，可在Chrome调试网络请求，查看SharePreferences,数据库等
                 .addNetworkInterceptor(new StethoInterceptor())
@@ -117,39 +123,115 @@ public class OkHttpHelper {
 
 
     // 云端响应头拦截器，用来配置缓存策略
-    private Interceptor mRewriteCacheControlInterceptor = chain -> {
-        Request request = chain.request();
-        // Logger.d(NetworkUtils.isAvailable(mContext));
-        if (!NetworkUtils.isConnected(mContext)) {
-            request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
-        }
-        Response originalResponse = chain.proceed(request);
-        if (NetworkUtils.isConnected(mContext)) {
-            //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
-            String cacheControl = request.cacheControl().toString();
-            return originalResponse.newBuilder().header("Cache-Control", cacheControl)
-                    .removeHeader("Pragma").build();
-        } else {
-            return originalResponse.newBuilder()
-                    .header("Cache-Control", "public, only-if-cached, max-stale=" + CACHE_STALE_LONG)
-                    .removeHeader("Pragma").build();
+    //离线读取本地缓存，在线获取最新数据(读取单个请求的请求头，亦可统一设置)。
+    private Interceptor mRewriteCacheControlInterceptor = new Interceptor() {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+
+            Request request = chain.request();
+
+            // Logger.d(NetworkUtils.isAvailable(mContext));
+            if (!NetworkUtils.isConnected(mContext)) {
+                //CacheControl.FORCE_CACHE; 没有网络时强制使用缓存
+                request = request.newBuilder().cacheControl(CacheControl.FORCE_CACHE).build();
+            }
+
+            Response originalResponse = chain.proceed(request);
+
+            if (NetworkUtils.isConnected(mContext)) {
+                //有网的时候读接口上的@Headers里的配置，你可以在这里进行统一的设置
+                String cacheControl = request.cacheControl().toString();
+                return originalResponse
+                        .newBuilder()
+                        .header("Cache-Control", cacheControl)
+                        .removeHeader("Pragma")
+                        .build();
+
+            } else {
+
+                return originalResponse
+                        .newBuilder()
+                        .header("Cache-Control", "public, only-if-cached, max-stale=" + CACHE_STALE_LONG)
+                        .removeHeader("Pragma")
+                        .build();
+            }
         }
     };
 
     /**
-     * 添加UA拦截器，B站请求API需要加上UA才能正常使用
+     * 添加统一请求体
      */
-//    private static class UserAgentInterceptor implements Interceptor {
+    private static class UserAgentInterceptor implements Interceptor {
+
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+
+            Request originalRequest = chain.request();
+
+            HttpUrl httpUrl  =  originalRequest.url().newBuilder()
+                    .addQueryParameter("user","1111")
+                    .build();
+
+            Request request = originalRequest.newBuilder().url(httpUrl).build();
 //
-//        @Override
-//        public Response intercept(Chain chain) throws IOException {
-//            Request originalRequest = chain.request();
-//            Request requestWithUserAgent = originalRequest.newBuilder()
-//                    .removeHeader("User-Agent")
-//                    .addHeader("User-Agent", ApiConstants.COMMON_UA_STR)
+//            Request requestWithUserAgent = originalRequest
+//                    .newBuilder()
+//                    .addPar
+////                    .removeHeader("user")
+//                    .addHeader()
 //                    .build();
-//            return chain.proceed(requestWithUserAgent);
-//        }
-//    }
+
+            return chain.proceed(request);
+        }
+    }
+
+    /**
+     * 解决多个头部
+     */
+    public class MoreBaseUrlInterceptor implements Interceptor {
+        @Override
+        public Response intercept(Chain chain) throws IOException {
+
+
+
+            //获取原始的originalRequest
+            Request originalRequest = chain.request();
+            //获取老的url
+            HttpUrl oldUrl = originalRequest.url();
+            //获取originalRequest的创建者builder
+            Request.Builder builder = originalRequest.newBuilder();
+            //获取头信息的集合如：manage,mdffx
+            List<String> urlnameList = originalRequest.headers("urlname");
+            if (urlnameList != null && urlnameList.size() > 0) {
+                //删除原有配置中的值,就是namesAndValues集合里的值
+                builder.removeHeader("urlname");
+                //获取头信息中配置的value,如：manage或者mdffx
+                String urlname = urlnameList.get(0);
+                HttpUrl baseURL=null;
+                //根据头信息中配置的value,来匹配新的base_url地址
+                if ("manage".equals(urlname)) {
+                    baseURL = HttpUrl.parse(BaseApi.base);
+                } else if ("mdffx".equals(urlname)) {
+                    baseURL = HttpUrl.parse(BaseApi.base2);
+                }else if ("ssss".equals(urlname)) {
+                    baseURL = HttpUrl.parse(BaseApi.base3);
+                }else {
+                    baseURL = HttpUrl.parse(BaseApi.base);
+                }
+                //重建新的HttpUrl，需要重新设置的url部分
+                HttpUrl newHttpUrl = oldUrl.newBuilder()
+                        .scheme(baseURL.scheme())//http协议如：http或者https
+                        .host(baseURL.host())//主机地址
+                        .port(baseURL.port())//端口
+                        .build();
+                //获取处理后的新newRequest
+                Request newRequest = builder.url(newHttpUrl).build();
+                return  chain.proceed(newRequest);
+            }else{
+                return chain.proceed(originalRequest);
+            }
+
+        }
+    }
 
 }

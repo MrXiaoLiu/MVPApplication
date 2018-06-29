@@ -1,12 +1,10 @@
 package text.tao.com.myapplication.MVPDemo.ui;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-
-import com.bumptech.glide.Glide;
+import android.widget.EditText;
 
 import javax.inject.Inject;
 
@@ -25,6 +23,8 @@ public class MainDemoActivity extends BaseActivity<LoginView, LoginPresenter> im
     SectionedRVAdapter mSectionedAdapter;
     RecyclerView recycle_view;
 
+
+
     public void complete() {
         Log.i("aaa", "complete请求数据完成");
     }
@@ -42,24 +42,20 @@ public class MainDemoActivity extends BaseActivity<LoginView, LoginPresenter> im
     }
 
 
-
-    protected void onCreate(@Nullable Bundle paramBundle) {
-        super.onCreate(paramBundle);
-        Log.i("aaa","执行这里MainDemoActivity");
-    }
-
     @Override
     protected void onitiv(Bundle paramBundle) {
-        setContentView(R.layout.acticity_main_demo);
+             setContentView( R.layout.acticity_main_demo);
+
         this.recycle_view = ((RecyclerView) findViewById(R.id.recycle_view));
+
 
         recycle_view.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    Glide.with(MainDemoActivity.this).resumeRequests();
+//                    Glide.with(MainDemoActivity.this).resumeRequests();
                 }else {
-                    Glide.with(MainDemoActivity.this).pauseRequests();
+//                    Glide.with(MainDemoActivity.this).pauseRequests();
                 }
             }
 
@@ -68,7 +64,6 @@ public class MainDemoActivity extends BaseActivity<LoginView, LoginPresenter> im
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
-        Log.i("aaa","执行这里onitiv");
         //获取数据
         ((LoginPresenter) getMvpPresenter()).login("184", "111111", "86");
 
@@ -85,6 +80,7 @@ public class MainDemoActivity extends BaseActivity<LoginView, LoginPresenter> im
     protected void initInject() {
         getActivityComponent().inject(this);
     }
+
 
     public void onLoginResult(IndexBean paramIndexBean) {
         //设置数据
